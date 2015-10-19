@@ -65,7 +65,7 @@ Ant property 'sdk.dir' is missing:
     </fail>
     <fail>
         <condition>
-            <not><available file="${sdk.dir}/tools/android" type="file"/></not>
+            <not><available file="${sdk.dir}/tools/android.bat" type="file"/></not>
         </condition>
 Directory does not appear to be an Android SDK: sdk.dir=${sdk.dir}
 - EITHER generate a local.properties file using 'android update project'
@@ -80,7 +80,7 @@ Ant property 'ndk.dir' is missing:
     </fail>
     <fail>
         <condition>
-            <not><available file="${ndk.dir}/ndk-build" type="file"/></not>
+            <not><available file="${ndk.dir}/ndk-build.cmd" type="file"/></not>
         </condition>
 Directory does not appear to be an Android NDK: ndk.dir=${ndk.dir}
 - EITHER set the Ant property 'ndk.dir' in a properties file
@@ -108,16 +108,8 @@ Directory does not appear to be an Android NDK: ndk.dir=${ndk.dir}
 Could not compute version code.
     </fail>
 
-    <exec executable="${basedir}/jni/serval-dna/version_string.sh"
-          dir="${basedir}"
-          outputproperty="version.name"
-          failifexecutionfails="true"
-          failonerror="true"
-          logError="true"
-    />
-
-    <echo>Version Name: ${version.name}</echo>
-    <echo>Version Code: ${version.code}</echo>
+    <echo>Version Name: 1.0</echo>
+    <echo>Version Code: 1</echo>
 
     <!--
     For debugging with gdb call "ant clean servald_simple debug"
@@ -633,7 +625,7 @@ ${manifest.id.line}${manifest.bk.line}${manifest.version.line}</echo>
 
     <target name="ndk-build">
       <property name="ndk.args" value=""/>
-      <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+      <exec executable="${ndk.dir}/ndk-build.cmd" failonerror="true">
          <arg line="${ndk.args}"/>
       </exec>
     </target>
@@ -641,7 +633,7 @@ ${manifest.id.line}${manifest.bk.line}${manifest.version.line}</echo>
     <target name="-pre-build" depends="-version-xml,ndk-build,generate-html,res-zip" />
 
     <target name="clean-all" depends="clean">
-      <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+      <exec executable="${ndk.dir}/ndk-build.cmd" failonerror="true">
 	<arg value="clean"/>
       </exec>
       <delete file="${basedir}/data/bin/adhoc" quiet="true"/>
